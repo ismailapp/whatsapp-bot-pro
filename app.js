@@ -155,6 +155,7 @@ app.get("/me_data", (req, res) => {
 //---------------------------------------------
 //---------------------------------------------
 app.get("/status", (req, res) => {
+  // res.setHeader('Content-Type', 'application/json');
   if(status=='READY'){
     res.status(200).json({
       status: true,
