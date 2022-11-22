@@ -5,6 +5,7 @@ const { body, validationResult } = require('express-validator');
 const http = require('http');
 const fs = require('fs');
 const { phoneNumberFormatter } = require('./formatter');
+const { apikey } = require('./api-key');
 const fileUpload = require('express-fileupload');
 const axios = require('axios');
 const port = process.env.PORT || 3000;
@@ -290,7 +291,6 @@ app.post('/send', jsonParser, [
   const number = phoneNumberFormatter(req.body.number);
   const message = req.body.message;
   const token = req.body.token;
-
      //==== CEK READY
      a0 = cek_ready(res);
      if(a0){return a0;}
@@ -433,14 +433,8 @@ function state(val){
 //#############################################
 //#############################################
 function kirim(no,msg,token,res){
-   if (api_key!=token) {
-     res.status(421).json({
-      status: false,
-      msg: 'API-KEY-SALAH',
-      data: {}
-      });
-   }else{
-      client.sendMessage(no, msg).then(response => {
+   if (api_key===token) {
+       client.sendMessage(no, msg).then(response => {
         res.status(200).json({
             status: true,
             msg: "Terkirim",
@@ -453,6 +447,13 @@ function kirim(no,msg,token,res){
             data: {err}
           });
         });
+   }else{
+     res.status(421).json({
+      status: false,
+      msg: 'API-KEY-SALAH',
+      data: {}
+      });
+    
    }
  
 }
