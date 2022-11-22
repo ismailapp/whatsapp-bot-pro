@@ -297,13 +297,10 @@ app.post('/send', jsonParser, [
      //==== CEK ERROR
      if(!errors.isEmpty()){er = cek_error(res);return er;}
      //==== CEK NO WA
-     const isRegisteredNumber = await checkRegisteredNumber(number);
-     if(!isRegisteredNumber){dt = res_nomor(res);return dt;}  
-     //==== CEK API KEY
-     a1 = cek_apikey(token,res);
-     if(a1){return a1;}
+     // const isRegisteredNumber = await checkRegisteredNumber(number);
+     // if(!isRegisteredNumber){dt = res_nomor(res);return dt;}  
      //==== KIRIM PESAN
-     kirim(number, message,res);
+     kirim(number, message,token,res);
 });
 // END LINE =====================================================
 /**==============================================================
@@ -435,13 +432,22 @@ function state(val){
 }
 //#############################################
 //#############################################
-function kirim(no,msg,res){
+function kirim(no,msg,token,res){
   client.sendMessage(no, msg).then(response => {
-  res.status(200).json({
-      status: true,
-      msg: "Terkirim",
-      data: {response}
-    });
+      if (api_key!=token) {
+       res.status(421).json({
+        status: false,
+        msg: 'API-KEY-SALAH',
+        data: {}
+        });
+      }else{
+        res.status(200).json({
+          status: true,
+          msg: "Terkirim",
+          data: {response}
+        });
+      }
+  
   }).catch(err => {
    res.status(500).json({
       status: false,
