@@ -140,13 +140,13 @@ app.get("/me_data", (req, res) => {
   if(inc){
     nomor = inc.wid.user;
     res.status(200).json({
-        name:inc.pushname,
-        number: nomor.replace('62','0')
+        nama:inc.pushname,
+        hp: nomor.replace('62','0')
     });
   }else{
     res.status(200).json({
-        name:"",
-        number:""
+        status:"Belum Terkai No Whatsapp",
+        code:"403"
     });
   }
 });
@@ -156,21 +156,18 @@ app.get("/status", (req, res) => {
   // res.setHeader('Content-Type', 'application/json');
   if(status=='READY'){
     res.status(200).json({
-      status: true,
-      msg: status,
-      data: {}
+      status: status,
+      code: '200'
     });
   }else if(status=='DEVICE NO INTERNET'){
     res.status(501).json({
-      status: true,
-      msg: status,
-      data: {}
+      status: status,
+      code: '501'
     });
   }else{
     res.status(201).json({
-      status: true,
-      msg: status,
-      data: {}
+      status: status,
+      code: '201'
     });
   }
 });
