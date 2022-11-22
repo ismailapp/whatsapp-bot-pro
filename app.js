@@ -433,27 +433,27 @@ function state(val){
 //#############################################
 //#############################################
 function kirim(no,msg,token,res){
-  client.sendMessage(no, msg).then(response => {
-      if (api_key!=token) {
-       res.status(421).json({
-        status: false,
-        msg: 'API-KEY-SALAH',
-        data: {}
-        });
-      }else{
-        res.status(200).json({
-          status: true,
-          msg: "Terkirim",
-          data: {response}
-        });
-      }
-  
-  }).catch(err => {
-   res.status(500).json({
+   if (api_key!=token) {
+     res.status(421).json({
       status: false,
-      msg: "Gagal terkirim",
-      data: {err}
-    });
-  });
+      msg: 'API-KEY-SALAH',
+      data: {}
+      });
+   }else{
+      client.sendMessage(no, msg).then(response => {
+        res.status(200).json({
+            status: true,
+            msg: "Terkirim",
+            data: {response}
+          });
+        }).catch(err => {
+         res.status(500).json({
+            status: false,
+            msg: "Gagal terkirim",
+            data: {err}
+          });
+        });
+   }
+ 
 }
 //#############################################
