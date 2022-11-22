@@ -108,11 +108,11 @@ let qrcode_return = null;
  * APP EXPRESS START
  ===============================================================*/
  let inc;
-app.get('/', (req, res) => {
-  res.sendFile('page.html', {
-    root: __dirname
-  });
-});
+// app.get('/', (req, res) => {
+//   res.sendFile('page.html', {
+//     root: __dirname
+//   });
+// });
 //---------------------------------------------
 
 app.get("/getChat", async (req, res) => {
@@ -152,7 +152,7 @@ app.get("/me_data", (req, res) => {
   }else{
     res.status(200).json({
         status:"Belum Terkai No Whatsapp",
-        code:"403"
+        code:"404"
     });
   }
 });
