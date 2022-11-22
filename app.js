@@ -287,10 +287,18 @@ app.post('/send', jsonParser, [
   }) => {
     return msg;
   });
-
+  
+  const token = apikey(req.body.token);
+  if(!token){
+      res.status(421).json({
+        status: false,
+        msg: 'API-KEY-SALAH',
+        data: {}
+        });
+  }
   const number = phoneNumberFormatter(req.body.number);
   const message = req.body.message;
-  const token = req.body.token;
+  
      //==== CEK READY
      a0 = cek_ready(res);
      if(a0){return a0;}
@@ -300,7 +308,7 @@ app.post('/send', jsonParser, [
      // const isRegisteredNumber = await checkRegisteredNumber(number);
      // if(!isRegisteredNumber){dt = res_nomor(res);return dt;}  
      //==== KIRIM PESAN
-     kirim(number, message,token,res);
+     kirim(number, message,res);
 });
 // END LINE =====================================================
 /**==============================================================
@@ -432,29 +440,20 @@ function state(val){
 }
 //#############################################
 //#############################################
-function kirim(no,msg,token,res){
-   if (api_key===token) {
-       client.sendMessage(no, msg).then(response => {
-        res.status(200).json({
-            status: true,
-            msg: "Terkirim",
-            data: {response}
-          });
-        }).catch(err => {
-         res.status(500).json({
-            status: false,
-            msg: "Gagal terkirim",
-            data: {err}
-          });
-        });
-   }else{
-     res.status(421).json({
-      status: false,
-      msg: 'API-KEY-SALAH',
-      data: {}
+function kirim(no,msg,res){
+   client.sendMessage(no, msg).then(response => {
+    res.status(200).json({
+        status: true,
+        msg: "Terkirim",
+        data: {response}
       });
-    
-   }
+    }).catch(err => {
+     res.status(500).json({
+        status: false,
+        msg: "Gagal terkirim",
+        data: {err}
+      });
+    });
  
 }
 //#############################################

@@ -1,9 +1,10 @@
-const apiKey = function(key) {
-    let formatted = key.replace(/\D/g, '');
-    if (formatted.startsWith('0')) {
-      formatted = '62' + formatted.substr(1);
+const apikey = function(key) {
+    if (key=='3fa44af0bcf0fc65e5429cf328c582d0a106faf8') {
+      return true;
+    }else{
+      return false;
     }
   }
   module.exports = {
-    apiKey
+    apikey
   }
