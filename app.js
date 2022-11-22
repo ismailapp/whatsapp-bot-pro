@@ -129,10 +129,8 @@ app.get("/getChat", async (req, res) => {
 app.get("/qr", (req, res) => {
   res.status(200).json({
       status: true,
-      msg: "mendapatkan qr",
-      data: {
-          qr: qrcode_return
-      }
+      code: "200",
+      qr: qrcode_return
   });
 });
 //---------------------------------------------
