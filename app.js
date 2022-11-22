@@ -19,25 +19,25 @@ const jsonParser = bodyParser.json()
 /**==============================================================
  * FUNCTION TIME START
  ===============================================================*/
-TZ = "Asia/Makassar";
-let timestamp = new Date().getTime();
-let new_date = new Date();
-let realtime = date("%Y%m%d%H%M%S");
-function date(fstr) {
-  let date = new Date();
-  return fstr.replace (/%[YmdHMS]/g, function (m) {
-    switch (m) {
-    case '%Y': return date['getFullYear'] ();
-    case '%m': m = 1 + date['getMonth'] (); break;
-    case '%d': m = date['getDate'] (); break;
-    case '%H': m = date['getHours'] (); break;
-    case '%M': m = date['getMinutes'] (); break;
-    case '%S': m = date['getSeconds'] (); break;
-    default: return m.slice (1);
-    }
-    return ('0' + m).slice (-2);
-  });
-}
+// TZ = "Asia/Makassar";
+// let timestamp = new Date().getTime();
+// let new_date = new Date();
+// let realtime = date("%Y%m%d%H%M%S");
+// function date(fstr) {
+//   let date = new Date();
+//   return fstr.replace (/%[YmdHMS]/g, function (m) {
+//     switch (m) {
+//     case '%Y': return date['getFullYear'] ();
+//     case '%m': m = 1 + date['getMonth'] (); break;
+//     case '%d': m = date['getDate'] (); break;
+//     case '%H': m = date['getHours'] (); break;
+//     case '%M': m = date['getMinutes'] (); break;
+//     case '%S': m = date['getSeconds'] (); break;
+//     default: return m.slice (1);
+//     }
+//     return ('0' + m).slice (-2);
+//   });
+// }
 /* date("%Y-%m-%d %H:%M:%S")
  returns "2012-05-18 05:37:21" */
 //  setInterval(cek,1000);
