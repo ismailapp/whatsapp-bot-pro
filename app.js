@@ -368,6 +368,7 @@ client.on('message', message  => {
   id_pesan: id_pesan
   })
   .then(res => {
+     console.log(msg)
   // console.log(`statusCode: ${res.statusCode}`)
   // console.log(res)
   })
