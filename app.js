@@ -56,6 +56,7 @@ var cron = require('node-cron');
 const BASE_URL = './base.json';
 base = (fs.existsSync(BASE_URL))?require(BASE_URL):'';
 let base_url = base.url;
+let date = new Date();
 /**==============================================================
  * JSON DB END
  ===============================================================*/
@@ -63,15 +64,17 @@ let base_url = base.url;
 let cek_server = base_url+"whatsapp/auth_broadcast"; 
 
 var task = cron.schedule('0-59 * * * * *', () => {
-  let date = new Date();
-  console.log(date['getSeconds'] ());
+  date = new Date();
+  console.log(date['getSeconds'] ()+' '+cek_server);
+  }, {
+  scheduled: false
 });
 
   axios.get(cek_server).catch((error) => {
       if (error.response) {
-        task.stop();
-      }else{
         task.start();
+      }else{
+        task.stop();
       }
     });
 
