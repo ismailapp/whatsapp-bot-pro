@@ -297,10 +297,12 @@ app.post('/send', jsonParser, [
         data: {}
         });
   }
+  //==== CEK NO WA START
   const number = phoneNumberFormatter(req.body.number);
-  //==== CEK NO WA
-  await cek_nomor(number,res);
-   
+  const cekno = await cek_nomor(number,res);
+  if(!cekno){return;}
+  //==== CEK NO WA STOP
+
   const message = req.body.message;
   
      //==== CEK READY
@@ -433,7 +435,9 @@ async function cek_nomor(number,res){
         msg: 'No HP Belum Terdaftar Whatsapp',
         data: {}
         });
-         Promise.reject();
+         return false;
+     }else{
+         return true;
      }
 }
 //#############################################
