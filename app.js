@@ -5,7 +5,7 @@ const { body, validationResult } = require('express-validator');
 const http = require('http');
 const fs = require('fs');
 const { phoneNumberFormatter } = require('./formatter');
-const { apikey } = require('./api-key');
+const { cektoken } = require('./cek-token');
 const fileUpload = require('express-fileupload');
 const axios = require('axios');
 const port = process.env.PORT || 3000;
@@ -104,6 +104,7 @@ client.initialize();
 
 let status = "NOT READY";
 let qrcode_return = null;
+let dt;
 
 /**==============================================================
  * APP EXPRESS START
@@ -288,7 +289,7 @@ app.post('/send', jsonParser, [
     return msg;
   });
   
-  const token = apikey(req.body.token);
+  const token = cektoken(req.body.token);
   if(!token){
       res.status(200).json({
         status: true,
@@ -297,6 +298,9 @@ app.post('/send', jsonParser, [
         });
   }
   const number = phoneNumberFormatter(req.body.number);
+       //==== CEK NO WA
+ 
+   
   const message = req.body.message;
   
      //==== CEK READY
@@ -304,9 +308,7 @@ app.post('/send', jsonParser, [
      if(a0){return a0;}
      //==== CEK ERROR
      if(!errors.isEmpty()){er = cek_error(res);return er;}
-     //==== CEK NO WA
-     // const isRegisteredNumber = await checkRegisteredNumber(number);
-     // if(!isRegisteredNumber){dt = res_nomor(res);return dt;}  
+
      //==== KIRIM PESAN
      kirim(number, message,res);
 });
@@ -423,13 +425,17 @@ function cek_apikey(token,res){
 }
 //#############################################
 //#############################################
-function res_nomor(res){
-    dt = res.status(420).json({
-      status: false,
-      msg: 'The number is not registered',
-      data: {}
-    });
-    return dt;
+function cek_nomor(number,res){
+       const isRegisteredNumber = await checkRegisteredNumber(number);
+     if(!isRegisteredNumber){
+        res.status(200).json({
+        status: true,
+        msg: 'No HP Belum Terdaftar Whatsapp',
+        data: {}
+        });
+     }else{
+       
+     }
 }
 //#############################################
 //#############################################
