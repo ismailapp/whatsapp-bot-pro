@@ -185,9 +185,12 @@ app.post("/callback", jsonParser, [
   body('token').notEmpty(),
   body('url').notEmpty(),
 ], async (req, res) => {
-    const token_auth = req.body.token;
-    if(api_key == token_auth){
-      base_url =req.body.url
+      //==== CEK API-KEY
+  const token = cektoken(req.body.token);
+  if(!token){r200('API-KEY-SALAH',res);return;}
+  else
+  {
+    base_url =req.body.url
       fs.writeFile(BASE_URL, '{"url":"'+req.body.url+'"}', function (err) {
           if (err) {
               console.error(err);
@@ -199,13 +202,8 @@ app.post("/callback", jsonParser, [
             data:{}
           });
         console.log('CALLBACK SERVER SAVE');
-      }else{
-        res.status(421).json({
-          status: false,
-          msg:"API-KEY-SALAH",
-          data:{}
-        });
-    }
+    return;
+  }
 });
 // =================================================================
 // =================================================================
@@ -215,24 +213,19 @@ app.post("/logout", jsonParser, [
     //==== CEK API-KEY
   const token = cektoken(req.body.token);
   if(!token){r200('API-KEY-SALAH',res);return;}
-    const token_auth = req.body.token;
-    if(api_key == token_auth){
-      status="NOT READY";
+  else
+  {
+     status="NOT READY";
       await client.logout().then(()=>{
         client.initialize();
       });
       res.status(200).json({
          status: true,
-         msg:"Berhasil Keluar",
-         data:{}
-       });
-      }else{
-        return res.status(421).json({
-          status: false,
-          msg: 'API-KEY-SALAH',
-          data: {}
-        });
-    }
+         msg:"Berhasil Keluar"
+      });
+    return;
+  }
+     
 });
 // =================================================================
 // Send MEDIA START ================================================
@@ -404,33 +397,11 @@ function cek_ready(res){
 }
 //#############################################
 //#############################################
-function cek_error(res){
-  dt = res.status(422).json({
-      status: false,
-      msg: errors.mapped(),
-      data: {}
-    });
-  return dt;
-}
-//#############################################
-//#############################################
 function r200(msg,res){
  res.status(200).json({
       status: true,
       msg: msg
     });
-}
-//#############################################
-//#############################################
-function cek_apikey(token,res){
-  if (api_key!=token) {
-     dt = res.status(421).json({
-      status: false,
-      msg: 'API-KEY-SALAH',
-      data: {}
-      });
-      return dt;
-  }
 }
 //#############################################
 //#############################################
