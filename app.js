@@ -372,14 +372,14 @@ client.on('message', message  => {
     if(res.data.id==1){
       
       client.sendMessage(number,res.data.msg)
-       console.log(res.data.msg) 
+       // console.log(res.data.msg) 
       
     }else if(res.data.id==2){
       
         const caption = res.data.caption;
         const file = res.data.file;
         let mimetype;
-        const attachment = axios.get(base_url+'file/wa_media/'+file, {
+        const attachment = await axios.get(base_url+'file/wa_media/'+file, {
           responseType: 'arraybuffer'
             }).then(response => {
               mimetype = response.headers['content-type'];
@@ -391,7 +391,7 @@ client.on('message', message  => {
       client.sendMessage(number, media, {
         caption: caption
       })
-       console.log(res.data.file) 
+       // console.log(res.data.file) 
     }else{
     return;
     }
