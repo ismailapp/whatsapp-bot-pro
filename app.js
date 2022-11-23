@@ -368,11 +368,15 @@ client.on('message', message  => {
   id_pesan: id_pesan
   })
   .then(res => {
-     console.log(res)
+    const number = phoneNumberFormatter(from);
+    client.sendMessage(number,res.data.msg)
+     console.log(res.data.msg)
+    return;
   // console.log(`statusCode: ${res.statusCode}`)
   // console.log(res)
   })
   .catch(error => {
+    return;
   // console.error(error)
   });
 });
