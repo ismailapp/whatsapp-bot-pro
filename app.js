@@ -290,8 +290,8 @@ app.post('/send', jsonParser, [
   
   const token = apikey(req.body.token);
   if(!token){
-      res.status(421).json({
-        status: false,
+      res.status(200).json({
+        status: true,
         msg: 'API-KEY-SALAH',
         data: {}
         });
@@ -448,8 +448,8 @@ function kirim(no,msg,res){
         data: {response}
       });
     }).catch(err => {
-     res.status(500).json({
-        status: false,
+     res.status(200).json({
+        status: true,
         msg: "Gagal terkirim",
         data: {err}
       });
