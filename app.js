@@ -65,8 +65,9 @@ let date = new Date();
 let cek_server = base_url+"whatsapp/auth_broadcast"; 
 
 var task = cron.schedule('0-59 * * * * *', () => {
-  date = new Date();
-  console.log(date['getSeconds'] ()+' '+cek_server);
+  console.log('*****');
+  // date = new Date();
+  // console.log(date['getSeconds'] ()+' '+cek_server);
   }, {
   scheduled: false
 });
@@ -219,6 +220,7 @@ app.post("/callback", jsonParser, [
           }else{
             r200('CALLBACK SERVER SAVE',res);
             console.log('CALLBACK SERVER SAVE');
+            proses.exit();
           }
       });
     return;
