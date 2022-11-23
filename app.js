@@ -288,7 +288,9 @@ app.post('/send', jsonParser, [
   }) => {
     return msg;
   });
-   //==== CEK API-KEY
+  //==== CEK READY
+     if(!cek_ready(res)){return;}
+  //==== CEK API-KEY
   const token = cektoken(req.body.token);
   if(!token){
       res.status(200).json({
@@ -296,6 +298,7 @@ app.post('/send', jsonParser, [
         msg: 'API-KEY-SALAH',
         data: {}
         });
+    return;
   }
   //==== CEK NO WA START
   const number = phoneNumberFormatter(req.body.number);
@@ -305,9 +308,7 @@ app.post('/send', jsonParser, [
 
   const message = req.body.message;
   
-     //==== CEK READY
-     a0 = cek_ready(res);
-     if(a0){return a0;}
+
      //==== CEK ERROR
      if(!errors.isEmpty()){er = cek_error(res);return er;}
 
@@ -395,12 +396,13 @@ server.listen(port, function() {
 //#############################################
 function cek_ready(res){
   if(status == "NOT READY"){
-    dt = res.status(500).json({
-        status: false,
-        msg: 'Whatsapp is not ready',
-        data: {}
+    res.status(200).json({
+        status: true,
+        msg: 'Whatsapp Belum Siap'
     });
-    return dt;
+    return false;
+  }else{
+    return true;
   }
 }
 //#############################################
@@ -432,8 +434,7 @@ async function cek_nomor(number,res){
        if(!isRegisteredNumber){
         res.status(200).json({
         status: true,
-        msg: 'No HP Belum Terdaftar Whatsapp',
-        data: {}
+        msg: 'No HP Belum Terdaftar Whatsapp'
         });
          return false;
      }else{
@@ -463,6 +464,6 @@ function kirim(no,msg,res){
         data: {err}
       });
     });
- 
+  return;
 }
 //#############################################
