@@ -433,7 +433,7 @@ async function cek_nomor(number,res){
         msg: 'No HP Belum Terdaftar Whatsapp',
         data: {}
         });
-         process.exit(2);
+         Promise.reject();
      }
 }
 //#############################################
