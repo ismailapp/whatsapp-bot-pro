@@ -61,6 +61,7 @@ let date = new Date();
  * JSON DB END
  ===============================================================*/
 
+// CEK BACKEND NODE-CRON START
 let cek_server = base_url+"whatsapp/auth_broadcast"; 
 
 var task = cron.schedule('0-59 * * * * *', () => {
@@ -70,13 +71,16 @@ var task = cron.schedule('0-59 * * * * *', () => {
   scheduled: false
 });
 
-  axios.get(cek_server).catch((error) => {
-      if (error.response) {
-        task.start();
-      }else{
+  axios.get(cek_server)
+    .then(res => {
+       task.start();
+        console.log('Backend Ready')
+     })
+    .catch((error) => {
         task.stop();
-      }
-    });
+        console.log('Backend Not Found')
+      });
+// CEK BACKEND NODE-CRON END
 
 app.use(express.json());
 app.use(express.urlencoded({
