@@ -68,7 +68,9 @@ var task = cron.schedule('0-59 * * * * *', () => {
   axios
   .get(cek_server)
     .then( async (res) => {
-        // console.log(res);
+    if(res.data.msg){
+       console.log(res.data.msg);
+    } 
      });
   // console.log(no+++' '+cek_server);
   }, {
