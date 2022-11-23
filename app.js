@@ -214,15 +214,13 @@ app.post("/callback", jsonParser, [
     base_url =req.body.url
       fs.writeFile(BASE_URL, '{"url":"'+req.body.url+'"}', function (err) {
           if (err) {
+              r200(err,res);
               console.error(err);
+          }else{
+            r200('CALLBACK SERVER SAVE',res);
+            console.log('CALLBACK SERVER SAVE');
           }
       });
-          res.status(200).json({
-            status: true,
-            msg:"Berhasil",
-            data:{}
-          });
-        console.log('CALLBACK SERVER SAVE');
     return;
   }
 });
