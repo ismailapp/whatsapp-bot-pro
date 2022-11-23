@@ -67,9 +67,7 @@ let no =1;
 var task = cron.schedule('0-59 * * * * *', () => {
   axios
   .get(cek_server);
-  console.log(no+++' '+cek_server);
-  // date = new Date();
-  // console.log(date['getSeconds'] ()+' '+cek_server);
+  // console.log(no+++' '+cek_server);
   }, {
   scheduled: false
 });
@@ -396,13 +394,7 @@ client.on('disconnected', (reason) => {
 server.listen(port, function() {
   console.log('APLIKASI BERJALAN PADA PORT : ' + port);
 });
-// /*Interval*/
-// let cek_server = base_url+"whatsapp/auth_broadcast"; 
-// setInterval(function() {
-//   axios
-//   .get(cek_server);
-//   // console.log(cek_server+' = is ok 200');
-// },1000);
+
 //#############################################
 function cek_ready(res){
   if(status == "NOT READY"){
