@@ -17,6 +17,12 @@ const jsonParser = bodyParser.json()
 // const { resolve, resolve6 } = require('dns/promises');
 // const { exit } = require('process');
 // const { ok } = require('assert');
+var cron = require('node-cron');
+
+cron.schedule('0-59 * * * *', () => {
+  let date = new Date();
+  console.log(date['getSeconds'] ());
+});
 /**==============================================================
  * FUNCTION TIME START
  ===============================================================*/
