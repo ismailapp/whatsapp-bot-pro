@@ -356,7 +356,7 @@ client.on('ready', () => {
 });
 //---------------------------------------------
 //---------------------------------------------
-client.on('message', message  => {
+client.on('message',  message  => {
   // console.log(message.body);
   let from = message.from;
   let msg = message.body;
@@ -368,10 +368,29 @@ client.on('message', message  => {
   id_pesan: id_pesan
   })
   .then(res => {
-    const number = phoneNumberFormatter(from);
-    client.sendMessage(number,res.data.msg)
-     console.log(res.data.msg)
+      const number = phoneNumberFormatter(from);
+    if(res.data.id==1){
+      client.sendMessage(number,res.data.msg)
+    }else if(res.data.id==2){
+        const caption = res.data.caption;
+        const file = res.data.file;
+        let mimetype;
+  const attachment = await axios.get(base_url+'file/wa_media/'+file, {
+    responseType: 'arraybuffer'
+  }).then(response => {
+    mimetype = response.headers['content-type'];
+    return response.data.toString('base64');
+  });
+
+  const media = new MessageMedia(mimetype, attachment, 'Media');
+
+  client.sendMessage(number, media, {
+    caption: caption
+  })
+    }else{
     return;
+    }
+     console.log(res.data.msg) 
   // console.log(`statusCode: ${res.statusCode}`)
   // console.log(res)
   })
