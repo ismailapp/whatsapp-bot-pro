@@ -132,11 +132,11 @@ let qrcode_return = 'Loading...';
  * APP EXPRESS START
  ===============================================================*/
  let inc;
-// app.get('/', (req, res) => {
-//   res.sendFile('page.html', {
-//     root: __dirname
-//   });
-// });
+app.get('/', (req, res) => {
+  res.sendFile('page.html', {
+    root: __dirname
+  });
+});
 //---------------------------------------------
 
 app.get("/getChat", async (req, res) => {
