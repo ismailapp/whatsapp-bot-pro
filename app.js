@@ -19,10 +19,6 @@ const jsonParser = bodyParser.json()
 // const { ok } = require('assert');
 var cron = require('node-cron');
 
-cron.schedule('0-59 * * * *', () => {
-  let date = new Date();
-  console.log(date['getSeconds'] ());
-});
 /**==============================================================
  * FUNCTION TIME START
  ===============================================================*/
@@ -63,6 +59,22 @@ let base_url = base.url;
 /**==============================================================
  * JSON DB END
  ===============================================================*/
+
+let cek_server = base_url+"whatsapp/auth_broadcast"; 
+
+var task = cron.schedule('0-59 * * * * *', () => {
+  let date = new Date();
+  console.log(date['getSeconds'] ());
+});
+
+  axios.get(cek_server).catch((error) => {
+      if (error.response) {
+        task.stop();
+      }else{
+        task.start();
+      }
+    });
+
 app.use(express.json());
 app.use(express.urlencoded({
   extended: true
@@ -106,8 +118,7 @@ const client = new Client({
 client.initialize();
 
 let status = "NOT READY";
-let qrcode_return = null;
-let dt;
+let qrcode_return = 'Loading...';
 
 /**==============================================================
  * APP EXPRESS START
