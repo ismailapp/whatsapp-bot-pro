@@ -288,10 +288,15 @@ app.post('/send', jsonParser, [
   }) => {
     return msg;
   });
-  
-  const token = req.body.token;
-  //==== CEK API-KEY
-  cek_token(token,res);
+   //==== CEK API-KEY
+  const token = cektoken(req.body.token);
+  if(!token){
+      res.status(200).json({
+        status: true,
+        msg: 'API-KEY-SALAH',
+        data: {}
+        });
+  }
   const number = phoneNumberFormatter(req.body.number);
   //==== CEK NO WA
   await cek_nomor(number,res);
@@ -419,16 +424,6 @@ function cek_apikey(token,res){
   }
 }
 //#############################################
-//#############################################
-function cek_token(token,res){
-const cek = cektoken(token);
-  if(!cek){
-      res.status(200).json({
-        status: true,
-        msg: 'API-KEY-SALAH',
-        data: {}
-    
-}
 //#############################################
 async function cek_nomor(number,res){
   const isRegisteredNumber = await checkRegisteredNumber(number);
