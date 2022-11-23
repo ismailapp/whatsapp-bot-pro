@@ -298,8 +298,8 @@ app.post('/send', jsonParser, [
         });
   }
   const number = phoneNumberFormatter(req.body.number);
-       //==== CEK NO WA
- 
+  //==== CEK NO WA
+ cek_nomor(number,res);
    
   const message = req.body.message;
   
@@ -425,16 +425,14 @@ function cek_apikey(token,res){
 }
 //#############################################
 //#############################################
-function cek_nomor(number,res){
-       const isRegisteredNumber = await checkRegisteredNumber(number);
+function async cek_nomor(number,res){
+  const isRegisteredNumber = await checkRegisteredNumber(number);
      if(!isRegisteredNumber){
         res.status(200).json({
         status: true,
         msg: 'No HP Belum Terdaftar Whatsapp',
         data: {}
         });
-     }else{
-       
      }
 }
 //#############################################
