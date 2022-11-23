@@ -292,26 +292,17 @@ app.post('/send', jsonParser, [
      if(!cek_ready(res)){return;}
   //==== CEK API-KEY
   const token = cektoken(req.body.token);
-  if(!token){
-      res.status(200).json({
-        status: true,
-        msg: 'API-KEY-SALAH',
-        data: {}
-        });
-    return;
-  }
+  if(!token){r200('API-KEY-SALAH',res);return;}
   //==== CEK NO WA START
   const number = phoneNumberFormatter(req.body.number);
   const cekno = await cek_nomor(number,res);
   if(!cekno){return;}
   //==== CEK NO WA STOP
-
-  const message = req.body.message;
   
 
      //==== CEK ERROR
      if(!errors.isEmpty()){er = cek_error(res);return er;}
-
+     const message = req.body.message;
      //==== KIRIM PESAN
      kirim(number, message,res);
 });
@@ -414,6 +405,14 @@ function cek_error(res){
       data: {}
     });
   return dt;
+}
+//#############################################
+//#############################################
+function r200(msg,res){
+ res.status(200).json({
+      status: true,
+      msg: msg
+    });
 }
 //#############################################
 //#############################################
