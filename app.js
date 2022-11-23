@@ -51,9 +51,6 @@ const jsonParser = bodyParser.json()
 /**==============================================================
  * JSON DB START
  ===============================================================*/
-const API_KEY = './api-key.json';
-api = (fs.existsSync(API_KEY))?require(API_KEY):'';
-let api_key = api.key;
 const BASE_URL = './base.json';
 base = (fs.existsSync(BASE_URL))?require(BASE_URL):'';
 let base_url = base.url;
@@ -216,12 +213,9 @@ app.post("/logout", jsonParser, [
   else
   {
      status="NOT READY";
+     r200('Berhasil Keluar',res);
       await client.logout().then(()=>{
         client.initialize();
-      });
-      res.status(200).json({
-         status: true,
-         msg:"Berhasil Keluar"
       });
     return;
   }

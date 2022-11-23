@@ -1,5 +1,5 @@
 const cektoken = function(token) {
-    if (token=='3fa44af0bcf0fc65e5429cf328c582d0a106faf8') {
+    if (token=='d426d2e5cdb53a6dcfcb40f700905d37b9222070') {
       return true;
     }else{
       return false;
