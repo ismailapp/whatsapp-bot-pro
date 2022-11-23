@@ -64,11 +64,6 @@ let date = new Date();
 // CEK BACKEND NODE-CRON START
 let cek_server = base_url+"whatsapp/auth_broadcast"; 
 let no =1;
-axios
-  .get(cek_server)
-    .then( async (res) => {
-        console.log(res.connection);
-     });
 var task = cron.schedule('0-59 * * * * *', () => {
   axios
   .get(cek_server)
