@@ -392,7 +392,7 @@ client.on('disconnected', (reason) => {
  * CLIENT WHATSAPP END
  ===============================================================*/
 server.listen(port, function() {
-  console.log('App running on Port : ' + port);
+  console.log('APLIKASI BERJALAN PADA PORT : ' + port);
 });
 // /*Interval*/
 // let cek_server = base_url+"whatsapp/auth_broadcast"; 
