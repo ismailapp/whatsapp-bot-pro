@@ -299,7 +299,7 @@ app.post('/send', jsonParser, [
   }
   const number = phoneNumberFormatter(req.body.number);
   //==== CEK NO WA
- cek_nomor(number,res);
+  cek_nomor(number,res);
    
   const message = req.body.message;
   
@@ -425,9 +425,9 @@ function cek_apikey(token,res){
 }
 //#############################################
 //#############################################
-function async cek_nomor(number,res){
+async function cek_nomor(number,res){
   const isRegisteredNumber = await checkRegisteredNumber(number);
-     if(!isRegisteredNumber){
+       if(!isRegisteredNumber){
         res.status(200).json({
         status: true,
         msg: 'No HP Belum Terdaftar Whatsapp',
