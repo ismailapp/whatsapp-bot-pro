@@ -54,7 +54,7 @@ var cron = require('node-cron');
  * JSON DB START
  ===============================================================*/
 const BASE_URL = './base.json';
-base = (fs.existsSync(BASE_URL))?require(BASE_URL):'';
+let base = (fs.existsSync(BASE_URL))?require(BASE_URL):'';
 let base_url = base.url;
 let date = new Date();
 /**==============================================================
@@ -63,9 +63,11 @@ let date = new Date();
 
 // CEK BACKEND NODE-CRON START
 let cek_server = base_url+"whatsapp/auth_broadcast"; 
-
+let no =1;
 var task = cron.schedule('0-59 * * * * *', () => {
-  console.log('*****');
+  axios
+  .get(cek_server);
+  console.log(no+++' '+cek_server);
   // date = new Date();
   // console.log(date['getSeconds'] ()+' '+cek_server);
   }, {
@@ -168,7 +170,7 @@ app.get("/qr", (req, res) => {
 app.get("/me_data", (req, res) => {
   inc = (client.info)?client.info:false;
   if(inc){
-    nomor = inc.wid.user;
+   var nomor = inc.wid.user;
     res.status(200).json({
         nama:inc.pushname,
         hp: nomor.replace('62','0')
@@ -220,7 +222,7 @@ app.post("/callback", jsonParser, [
           }else{
             r200('CALLBACK SERVER SAVE',res);
             console.log('CALLBACK SERVER SAVE');
-            proses.exit();
+            process.exit();
           }
       });
     return;
