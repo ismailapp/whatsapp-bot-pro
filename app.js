@@ -212,6 +212,9 @@ app.post("/callback", jsonParser, [
 app.post("/logout", jsonParser, [
   body('token').notEmpty(),
 ], async (req, res) => {
+    //==== CEK API-KEY
+  const token = cektoken(req.body.token);
+  if(!token){r200('API-KEY-SALAH',res);return;}
     const token_auth = req.body.token;
     if(api_key == token_auth){
       status="NOT READY";
@@ -234,21 +237,26 @@ app.post("/logout", jsonParser, [
 // =================================================================
 // Send MEDIA START ================================================
 app.post('/send-media', jsonParser, async (req, res) => {
-  const number = phoneNumberFormatter(req.body.number);
+  const errors = validationResult(req).formatWith(({
+    msg
+  }) => {
+    return msg;
+  });
+  
   const caption = req.body.caption;
   const file = req.body.file;
-  const token = req.body.token;
-    //==== CEK READY
-    a0 = cek_ready(res);
-    if(a0){return a0;}
-    // //==== CEK ERROR
-    // if(!errors.isEmpty()){er = cek_error(res);return er;}
-    //==== CEK NO WA
-    const isRegisteredNumber = await checkRegisteredNumber(number);
-    if(!isRegisteredNumber){dt = res_nomor(res);return dt;}  
-    //==== CEK API KEY
-    a1 = cek_apikey(token,res);
-    if(a1){return a1;}
+//==== CEK READY
+  if(!cek_ready(res)){return;}
+  //==== CEK API-KEY
+  const token = cektoken(req.body.token);
+  if(!token){r200('API-KEY-SALAH',res);return;}
+  //==== CEK NO WA START
+  const number = phoneNumberFormatter(req.body.number);
+  const cekno = await cek_nomor(number,res);
+  if(!cekno){return;}
+  //==== CEK NO WA STOP
+  //==== CEK ERROR
+  if(!errors.isEmpty()){r200(errors.mapped(),res);return;}
   // const media = MessageMedia.fromFilePath('./image-example.png');
   // const file = req.files.file;
   // const media = new MessageMedia(file.mimetype, file.data.toString('base64'), file.name);
@@ -288,8 +296,9 @@ app.post('/send', jsonParser, [
   }) => {
     return msg;
   });
+  const message = req.body.message;
   //==== CEK READY
-     if(!cek_ready(res)){return;}
+  if(!cek_ready(res)){return;}
   //==== CEK API-KEY
   const token = cektoken(req.body.token);
   if(!token){r200('API-KEY-SALAH',res);return;}
@@ -298,13 +307,10 @@ app.post('/send', jsonParser, [
   const cekno = await cek_nomor(number,res);
   if(!cekno){return;}
   //==== CEK NO WA STOP
-  
-
-     //==== CEK ERROR
-     if(!errors.isEmpty()){er = cek_error(res);return er;}
-     const message = req.body.message;
-     //==== KIRIM PESAN
-     kirim(number, message,res);
+  //==== CEK ERROR
+  if(!errors.isEmpty()){r200(errors.mapped(),res);return;}
+   //==== KIRIM PESAN
+   kirim(number, message,res);
 });
 // END LINE =====================================================
 /**==============================================================
@@ -389,7 +395,7 @@ function cek_ready(res){
   if(status == "NOT READY"){
     res.status(200).json({
         status: true,
-        msg: 'Whatsapp Belum Siap'
+        msg: 'Whatsapp Belum Siap <br> Silahkan Scan terlebih dahulu.'
     });
     return false;
   }else{
