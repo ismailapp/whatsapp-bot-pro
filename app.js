@@ -67,7 +67,7 @@ let no =1;
 axios
   .get(cek_server)
     .then( async (res) => {
-        console.log(res);
+        console.log(res.connection);
      });
 var task = cron.schedule('0-59 * * * * *', () => {
   axios
