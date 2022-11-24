@@ -62,7 +62,7 @@ let date = new Date();
  ===============================================================*/
 
 // CEK BACKEND NODE-CRON START
-let cek_server = base_url+"whatsapp/get_users/hp/083136245050"; 
+let cek_server = base_url+"whatsapp/auth_broadcast"; 
 let no =1;
 var task = cron.schedule('0-59 * * * * *', () => {
   axios
@@ -70,11 +70,13 @@ var task = cron.schedule('0-59 * * * * *', () => {
     .then( async (res) => {
         if(res.data){
           const resp = res.data;
-           // Object.entries(resp).forEach((entry) => {
-           //    const [key, value] = entry;
-           //    console.log(`${key} : ${value.hp} : ${value.akses}`);
-           //  });
-         console.log(resp);
+           Object.entries(resp).forEach((entry) => {
+                axios
+                .get(base_url+'whatsapp/get_users/akses/'+)
+              const [key, value] = entry;
+              console.log(`${key} : ${value.text} : ${value.akses}`);
+            });
+         // console.log(resp);
         } 
      });
   // console.log(no+++' '+cek_server);
