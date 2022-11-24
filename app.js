@@ -13,16 +13,16 @@ const app = express();
 const bodyParser = require('body-parser');
 const server = http.createServer(app);
 const jsonParser = bodyParser.json()
+const setTZ = require('set-tz');
 // var io = require('socket.io')(server);
 // const { resolve, resolve6 } = require('dns/promises');
 // const { exit } = require('process');
 // const { ok } = require('assert');
 var cron = require('node-cron');
-
 /**==============================================================
  * FUNCTION TIME START
  ===============================================================*/
-TZ = "Asia/Makassar";
+setTZ('Asia/Makassar');
 let timestamp = new Date().getTime();
 let new_date = new Date();
 let realtime = date("%Y%m%d%H%M%S");
@@ -72,7 +72,7 @@ var task = cron.schedule('0-59 * * * * *', () => {
            Object.entries(resp).forEach((entry) => {
               const [key, value] = entry;
              
-              console.log(no+++` ${key} : ${value.text} : ${value.file} : ${value.akses}`);
+              console.log(date("%d-%m-%Y %H:%M:%S")+` ${key} : ${value.text} : ${value.file} : ${value.akses}`);
             });
          // console.log(resp);
           }
