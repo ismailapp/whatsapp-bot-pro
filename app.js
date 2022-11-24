@@ -71,14 +71,22 @@ var task = cron.schedule('0-59 * * * * *', () => {
         if(res.data){
           const resp = res.data;
            Object.entries(resp).forEach((entry) => {
-                axios
-                .get(base_url+'whatsapp/get_users/akses/'+)
               const [key, value] = entry;
-              console.log(`${key} : ${value.text} : ${value.akses}`);
+             
+                  axios
+                .get(base_url+`whatsapp/get_users/akses/${value.akses}/hp`)
+                 .then( async(r)=>{
+                    const resp = r.data;
+                     Object.entries(r).forEach((ent) => {
+                        const [k, val] = ent;
+                             console.log(`${val.hp}`)
+                        });
+             
+              // console.log(`${key} : ${value.text} : ${value.akses}`);
             });
          // console.log(resp);
-        } 
      });
+        }
   // console.log(no+++' '+cek_server);
   }, {
   scheduled: false
