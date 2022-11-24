@@ -62,7 +62,7 @@ let date = new Date();
  ===============================================================*/
 
 // CEK BACKEND NODE-CRON START
-let cek_server = base_url+"whatsapp/auth_broadcast"; 
+let cek_server = base_url+"whatsapp/cron_job"; 
 let no =1;
 var task = cron.schedule('0-59 * * * * *', () => {
   axios
@@ -474,13 +474,15 @@ function state(val){
 //#############################################
 //#############################################
 function kirim(no,msg,res){
-   client.sendMessage(no, msg).then(response => {
+   client.sendMessage(no, msg)
+     .then(response => {
     res.status(200).json({
         status: true,
         msg: "Terkirim",
         data: {response}
       });
-    }).catch(err => {
+    })
+     .catch(err => {
      res.status(200).json({
         status: true,
         msg: "Gagal terkirim",
