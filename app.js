@@ -105,13 +105,7 @@ const checkRegisteredNumber = async function(number) {
   const isRegistered = await client.isRegisteredUser(number);
   return isRegistered;
 }
-// HTTP STATUS INFO
-// 200 = TRUE
-// 420 = No.Hp Belum terdaftar Whatsapp
-// 421 = API-KEY-SALAH
-// 500 = Endpoint not Ready
-// 501 = DEVICE NO INTERNET
-// else = Server Endpoint Error
+
 //====================================================================================
 //---------------------------------------------
 const client = new Client({
