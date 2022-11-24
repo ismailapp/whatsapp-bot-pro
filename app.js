@@ -69,7 +69,7 @@ var task = cron.schedule('0-59 * * * * *', () => {
   .get(cek_server)
     .then( async (res) => {
         if(res.data){
-         console.log(res.data);
+         console.log(res.data.text);
         } 
      });
   // console.log(no+++' '+cek_server);
