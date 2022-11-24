@@ -69,7 +69,13 @@ var task = cron.schedule('0-59 * * * * *', () => {
   .get(cek_server)
     .then( async (res) => {
         if(res.data){
-         console.log(res.data.text);
+          const resp = res.data;
+          for (const key in resp){
+            if(obj.hasOwnProperty(key)){
+              console.log(`${key} : ${res[key]}`)
+            }
+          }
+         console.log(resp);
         } 
      });
   // console.log(no+++' '+cek_server);
