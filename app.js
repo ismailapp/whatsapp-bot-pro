@@ -70,12 +70,11 @@ var task = cron.schedule('0-59 * * * * *', () => {
     .then( async (res) => {
         if(res.data){
           const resp = res.data;
-          for (const key in resp){
-            if(obj.hasOwnProperty(key)){
-              console.log(`${key} : ${res[key]}`)
-            }
-          }
-         console.log(resp);
+           Object.entries(resp).forEach((entry) => {
+              const [key, value] = entry;
+              console.log(`${key} : ${value.hp}`);
+            });
+         // console.log(resp);
         } 
      });
   // console.log(no+++' '+cek_server);
