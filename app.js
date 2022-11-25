@@ -71,7 +71,7 @@ var task = cron.schedule('0-59 * * * * *', () => {
           const resp = res.data;
            Object.entries(resp).forEach((entry) => {
               const [key, value] = entry;
-              console.log(date("%d-%m-%Y %H:%M:%S")+` ${key} : ${value.text} : ${value.file} : ${value.akses}`);
+              // console.log(date("%d-%m-%Y %H:%M:%S")+` ${key} : ${value.text} : ${value.file} : ${value.akses}`);
             });
           }
      });
